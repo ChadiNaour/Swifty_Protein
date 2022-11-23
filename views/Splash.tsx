@@ -35,7 +35,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
     },
     animationContainer: {
-        width: 230,
-        height: 230,
+        width: 250,
+        height: 250,
     }
 });
