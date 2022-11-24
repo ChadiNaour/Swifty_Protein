@@ -1,22 +1,36 @@
-import React from 'react';
-import { useFonts } from 'expo-font';
+import React,{ useCallback } from 'react';
 import { Pressable, Image, StyleSheet, Text, View } from 'react-native';
+import { useFonts } from 'expo-font';
+import * as SplashScreen from 'expo-splash-screen';
+SplashScreen.preventAutoHideAsync();
 
 const Login = () => {
-    // const [fontsLoaded] = useFonts({
-    //     'Inter-Black': require('../assets/fonts/avenir/'),
-    // });
+    const [fontsLoaded] = useFonts({
+        'NexaBold': require('../assets/fonts/Nexa/NexaTextDemo-Bold.ttf'),
+        'NexaBold2': require('../assets/fonts/Nexa/NexaDemo-Bold.ttf'),
+      });
+
+      const onLayoutRootView = useCallback(async () => {
+        if (fontsLoaded) {
+          await SplashScreen.hideAsync();
+        }
+      }, [fontsLoaded]);
+    
+      if (!fontsLoaded) {
+        return null;
+      }
     return (
-        <View style={styles.container}>
+        <View style={styles.container} onLayout={onLayoutRootView}>
             <View style={styles.TopContainer}>
                 <Image
-                    style={styles.TextLogo}
-                    source={require('../assets/Text_Logo.png')}
+                    style={styles.SymbolLogo}
+                    source={require('../assets/images/Symbol_Logo.png')}
                 />
+                <Text style={{...styles.textLogo, fontFamily: 'NexaBold'}}>42 Proteins</Text>
             </View>
             <View style={styles.BottomContainer}>
                 <View style={styles.learnMoreContainer}>
-                    <Text style={styles.learnMoreText}>Learn more about proteins</Text>
+                    <Text style={{...styles.learnMoreText, fontFamily: 'NexaBold'}}>Learn more about proteins</Text>
                 </View>
                 <View style={styles.DescriptionContainer}>
                     <Text style={styles.DescriptionText}>SwiftyProteins is a visualizer for proteins models according to standardized representation from the famous PDB (Protein Data Bank) using SceneKit.</Text>
@@ -44,17 +58,24 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
     },
-    TextLogo: {
+    textLogo: {
         position: "absolute",
-        bottom: "20%",
-        width: 320,
-        height: 158
+        bottom: -70,
+        color: 'black',
+        fontSize: 20,
+        fontWeight: "bold",
+    },
+    SymbolLogo: {
+        position: "absolute",
+        bottom: -45,
+        width: 110,
+        height: 110
     },
     LoginButton: {
-        backgroundColor: '#142445',
-        width: 260,
-        height: 60,
-        borderRadius: 8,
+        backgroundColor: '#0F0E0E',
+        width: 220,
+        height: 55,
+        borderRadius: 10,
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
@@ -65,18 +86,18 @@ const styles = StyleSheet.create({
         fontWeight: '600',
     },
     DescriptionContainer: {
-        width: '90%',
+        width: '80%',
         marginBottom: 30
     },
     DescriptionText: {
-        color: "#808DA6",
-        fontSize: 15,
+        color: "#8A8A8A",
+        fontSize: 16,
         fontWeight: '500',
         textAlign: 'center'
     },
     learnMoreContainer: {
         width: '60%',
-        marginBottom: 5
+        marginBottom: 20
     },
     learnMoreText: {
         color: "#142445",
@@ -85,13 +106,17 @@ const styles = StyleSheet.create({
         textAlign: 'center'
     },
     buttonContainer: {
+        position: 'absolute',
+        bottom: 50,
     },
     TopContainer: {
         position: 'absolute',
         top: 0,
-        // backgroundColor: "green",
-        height: "60%",
+        backgroundColor: "#0F0E0E",
+        height: "40%",
         width: "100%",
+        borderBottomEndRadius: 100,
+        borderBottomStartRadius: 100,
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
@@ -100,22 +125,12 @@ const styles = StyleSheet.create({
     BottomContainer: {
         position: 'absolute',
         bottom: 0,
-        // backgroundColor: "red",
-        shadowColor: "#000",
-        shadowOffset: {
-            width: 0,
-            height: 2,
-        },
-        shadowOpacity: 0.2,
-        shadowRadius: 5,
-        elevation: 2,
-        height: "40%",
+        paddingTop: 40,
+        height: "48%",
         width: "100%",
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
-        justifyContent: 'center',
-        borderTopLeftRadius: 30,
-        borderTopRightRadius: 30
+        justifyContent: 'flex-start',
     }
 });

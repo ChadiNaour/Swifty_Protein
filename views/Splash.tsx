@@ -1,25 +1,24 @@
-import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
-import LottieView from 'lottie-react-native';
+import React, { useEffect } from 'react';
+import { StyleSheet, Text, View, Image } from 'react-native';
 import type { RootStackParamList } from '../App';
 
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'Splash'>;
 
-const Splash = ( {navigation} : Props) => {
+const Splash = ({ navigation }: Props) => {
+
+    useEffect(() => {
+        var timer = setTimeout(() => {
+            navigation.navigate('Login')
+        }, 2000)
+        return () => clearTimeout(timer);
+    }, [])
+
     return (
         <View style={styles.container}>
             <View style={styles.animationContainer}>
-                {/* <Text>Splash</Text> */}
-                <LottieView
-                    source={require('../assets/Atom.json')}
-                    autoPlay
-                    loop={false}
-                    onAnimationFinish={() => {
-                        navigation.navigate('Login')
-                    }}
-                />
+                <Image style={styles.SymbolLogo} source={require("../assets/Symbol_Logo.png")} />
             </View>
         </View>
     )
@@ -35,7 +34,11 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
     },
     animationContainer: {
-        width: 250,
-        height: 250,
-    }
+        width: 100,
+        height: 100,
+    },
+    SymbolLogo: {
+        width: "100%",
+        height: "100%"
+    },
 });
