@@ -1,5 +1,5 @@
 import React, { useCallback } from 'react';
-import { Pressable, ImageBackground, Image, StyleSheet, Text, View } from 'react-native';
+import { Pressable, Image, StyleSheet, Text, View } from 'react-native';
 import { useFonts } from 'expo-font';
 import * as SplashScreen from 'expo-splash-screen';
 
@@ -25,13 +25,6 @@ const Login = () => {
 
     return (
         <View style={styles.container} onLayout={onLayoutRootView}>
-            {/* <ImageBackground style={{
-                justifyContent: 'center',
-                width: "100%",
-                // height: "40%",
-                borderBottomEndRadius: 100,
-                borderBottomStartRadius: 100,
-            }} resizeMode='cover' source={require('../assets/images/background.png')}> */}
             <View style={styles.TopContainer}>
                 <Image
                     style={styles.SymbolLogo}
@@ -39,7 +32,6 @@ const Login = () => {
                 />
                 <Text style={{ position: "absolute", bottom: -75, fontFamily: 'MondaBold', fontSize: 23, color: 'black' }}>42 Proteins</Text>
             </View>
-            {/* </ImageBackground> */}
             <View style={styles.BottomContainer}>
                 <View style={styles.learnMoreContainer}>
                     <Text style={{

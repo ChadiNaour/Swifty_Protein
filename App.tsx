@@ -23,19 +23,17 @@ const Stack = createNativeStackNavigator<RootStackParamList>();
 SplashScreen.preventAutoHideAsync();
 
 export default function App() {
-  const [fontsLoaded] = useFonts({
-    'NexaBold': require('./assets/fonts/Nexa/NexaTextDemo-Bold.ttf'),
-    'NexaBold2': require('./assets/fonts/Nexa/NexaDemo-Bold.ttf'),
-  });
 
   useEffect(() => {
     // Once our data is ready, hide the Splash Screen
     const hideSplashScreen = async () => {
       await SplashScreen.hideAsync();
     }
-    if (fontsLoaded) hideSplashScreen();
-  }, [fontsLoaded])
-  // if (!appIsReady) return null;
+    var timer = setTimeout(() => {
+      hideSplashScreen()
+    }, 2000)
+    return () => clearTimeout(timer);
+  }, [])
 
   return (
     <NavigationContainer>
