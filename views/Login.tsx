@@ -1,43 +1,71 @@
-import React,{ useCallback } from 'react';
-import { Pressable, Image, StyleSheet, Text, View } from 'react-native';
+import React, { useCallback } from 'react';
+import { Pressable, ImageBackground, Image, StyleSheet, Text, View } from 'react-native';
 import { useFonts } from 'expo-font';
 import * as SplashScreen from 'expo-splash-screen';
+
+
 SplashScreen.preventAutoHideAsync();
 
 const Login = () => {
     const [fontsLoaded] = useFonts({
         'NexaBold': require('../assets/fonts/Nexa/NexaTextDemo-Bold.ttf'),
         'NexaBold2': require('../assets/fonts/Nexa/NexaDemo-Bold.ttf'),
-      });
+        'MondaBold': require('../assets/fonts/Monda/Monda-bold.ttf'),
+    });
 
-      const onLayoutRootView = useCallback(async () => {
+    const onLayoutRootView = useCallback(async () => {
         if (fontsLoaded) {
-          await SplashScreen.hideAsync();
+            await SplashScreen.hideAsync();
         }
-      }, [fontsLoaded]);
-    
-      if (!fontsLoaded) {
+    }, [fontsLoaded]);
+
+    if (!fontsLoaded) {
         return null;
-      }
+    }
+
     return (
         <View style={styles.container} onLayout={onLayoutRootView}>
+            {/* <ImageBackground style={{
+                justifyContent: 'center',
+                width: "100%",
+                // height: "40%",
+                borderBottomEndRadius: 100,
+                borderBottomStartRadius: 100,
+            }} resizeMode='cover' source={require('../assets/images/background.png')}> */}
             <View style={styles.TopContainer}>
                 <Image
                     style={styles.SymbolLogo}
                     source={require('../assets/images/Symbol_Logo.png')}
                 />
-                <Text style={{...styles.textLogo, fontFamily: 'NexaBold'}}>42 Proteins</Text>
+                <Text style={{ position: "absolute", bottom: -75, fontFamily: 'MondaBold', fontSize: 23, color: 'black' }}>42 Proteins</Text>
             </View>
+            {/* </ImageBackground> */}
             <View style={styles.BottomContainer}>
                 <View style={styles.learnMoreContainer}>
-                    <Text style={{...styles.learnMoreText, fontFamily: 'NexaBold'}}>Learn more about proteins</Text>
+                    <Text style={{
+                        fontFamily: 'NexaBold2',
+                        color: "#0F0E0E",
+                        fontSize: 26,
+                        textAlign: 'center'
+                    }}>Learn more about proteins</Text>
                 </View>
                 <View style={styles.DescriptionContainer}>
-                    <Text style={styles.DescriptionText}>SwiftyProteins is a visualizer for proteins models according to standardized representation from the famous PDB (Protein Data Bank) using SceneKit.</Text>
+                    <Text style={{
+                        fontFamily: 'NexaBold',
+                        color: "#8A8A8A",
+                        fontSize: 16,
+                        fontWeight: '500',
+                        textAlign: 'center'
+                    }}>SwiftyProteins is a visualizer for proteins models according to standardized representation from the famous PDB (Protein Data Bank) using SceneKit.</Text>
                 </View>
                 <View style={styles.buttonContainer}>
                     <Pressable style={styles.LoginButton}>
-                        <Text style={styles.ButtonText}>
+                        <Text style={{
+                            fontFamily: 'NexaBold',
+                            color: "white",
+                            fontSize: 18,
+                            fontWeight: '600',
+                        }}>
                             Log In
                         </Text>
                     </Pressable>
@@ -58,57 +86,6 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
     },
-    textLogo: {
-        position: "absolute",
-        bottom: -70,
-        color: 'black',
-        fontSize: 20,
-        fontWeight: "bold",
-    },
-    SymbolLogo: {
-        position: "absolute",
-        bottom: -45,
-        width: 110,
-        height: 110
-    },
-    LoginButton: {
-        backgroundColor: '#0F0E0E',
-        width: 220,
-        height: 55,
-        borderRadius: 10,
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-    },
-    ButtonText: {
-        color: "white",
-        fontSize: 18,
-        fontWeight: '600',
-    },
-    DescriptionContainer: {
-        width: '80%',
-        marginBottom: 30
-    },
-    DescriptionText: {
-        color: "#8A8A8A",
-        fontSize: 16,
-        fontWeight: '500',
-        textAlign: 'center'
-    },
-    learnMoreContainer: {
-        width: '60%',
-        marginBottom: 20
-    },
-    learnMoreText: {
-        color: "#142445",
-        fontSize: 26,
-        fontWeight: 'bold',
-        textAlign: 'center'
-    },
-    buttonContainer: {
-        position: 'absolute',
-        bottom: 50,
-    },
     TopContainer: {
         position: 'absolute',
         top: 0,
@@ -122,6 +99,12 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
 
     },
+    SymbolLogo: {
+        position: "absolute",
+        bottom: -45,
+        width: 110,
+        height: 110
+    },
     BottomContainer: {
         position: 'absolute',
         bottom: 0,
@@ -132,5 +115,26 @@ const styles = StyleSheet.create({
         flexDirection: 'column',
         alignItems: 'center',
         justifyContent: 'flex-start',
+    },
+    learnMoreContainer: {
+        width: '70%',
+        marginBottom: 20
+    },
+    DescriptionContainer: {
+        width: '85%',
+        marginBottom: 30
+    },
+    buttonContainer: {
+        position: 'absolute',
+        bottom: 50,
+    },
+    LoginButton: {
+        backgroundColor: '#0F0E0E',
+        width: 220,
+        height: 55,
+        borderRadius: 10,
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
     }
 });
