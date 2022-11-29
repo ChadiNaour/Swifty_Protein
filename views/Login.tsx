@@ -1,10 +1,13 @@
 import React, { useCallback } from 'react';
-import { Pressable, Image, Alert, StyleSheet, Text, View, StatusBar } from 'react-native';
+import { Pressable, Image, Alert, StyleSheet, Text, View, ImageBackground } from 'react-native';
 import { useFonts } from 'expo-font';
 import * as SplashScreen from 'expo-splash-screen';
 import * as LocalAuthentication from 'expo-local-authentication';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import type { RootStackParamList } from '../App';
+import backgroundImage from "../assets/images/backgroundImage.png";
+import SymbolLogo from "../assets/images/Symbol_Logo.png";
+
 
 type Props = NativeStackScreenProps<RootStackParamList, 'Login'>;
 const Login = ({ navigation }: Props) => {
@@ -47,11 +50,20 @@ const Login = ({ navigation }: Props) => {
     return (
         <View style={styles.container} onLayout={onLayoutRootView}>
             <View style={styles.TopContainer}>
-                <Image
-                    style={styles.SymbolLogo}
-                    source={require('../assets/images/Symbol_Logo.png')}
-                />
-                <Text style={{ position: "absolute", bottom: -80, fontFamily: 'MondaBold', fontSize: 23, color: 'black' }}>42 Proteins</Text>
+                <ImageBackground
+                    source={backgroundImage}
+                    resizeMode="contain"
+                    style={styles.image}
+                >
+                    <View style={styles.LogoContainer}>
+                        <Image
+                            style={styles.SymbolLogo}
+                            source={SymbolLogo}
+                        />
+                        <Text style={{ position: "absolute", bottom: -95, fontFamily: 'MondaBold', fontSize: 25, color: 'black' }}>42 Proteins</Text>
+
+                    </View>
+                </ImageBackground>
             </View>
             <View style={styles.BottomContainer}>
                 <View style={styles.learnMoreContainer}>
@@ -76,10 +88,10 @@ const Login = ({ navigation }: Props) => {
                         <Text style={{
                             fontFamily: 'NexaBold',
                             color: "white",
-                            fontSize: 18,
+                            fontSize: 16,
                             fontWeight: '600',
                         }}>
-                            Log In
+                           LOG IN
                         </Text>
                     </Pressable>
                 </View>
@@ -103,18 +115,24 @@ const styles = StyleSheet.create({
         position: 'absolute',
         top: 0,
         backgroundColor: "#0F0E0E",
-        height: "40%",
+        height: "35%",
         width: "100%",
         borderBottomEndRadius: 150,
         borderBottomStartRadius: 150,
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
+    },
+    LogoContainer: {
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        zIndex: 99
 
     },
     SymbolLogo: {
         position: "absolute",
-        bottom: -45,
+        bottom: -55,
         width: 110,
         height: 110
     },
@@ -149,5 +167,12 @@ const styles = StyleSheet.create({
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
-    }
+    },
+    image: {
+        justifyContent: "center",
+        width: "100%",
+        height: 350,
+        position: "absolute",
+        top: 110
+    },
 });

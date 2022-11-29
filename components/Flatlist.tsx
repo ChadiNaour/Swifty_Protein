@@ -51,10 +51,13 @@ const FlatListComponent = ({ DATA }: ligandsData) => {
 
 const styles = StyleSheet.create({
   container: {
+    flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
     width: '100%',
-    zIndex: -1
+    height: '100%',
+    zIndex: -1,
+    // marginBottom: 20
 
   },
   firstListItem: {
@@ -67,7 +70,7 @@ const styles = StyleSheet.create({
     paddingVertical: 12,
     marginVertical: 10,
     width: 350,
-    marginTop: 55
+    marginTop: 50
 
   },
   listItem: {

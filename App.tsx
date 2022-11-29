@@ -31,7 +31,7 @@ export default function App() {
     }
     var timer = setTimeout(() => {
       hideSplashScreen()
-    }, 2000)
+    }, 2500)
     return () => clearTimeout(timer);
   }, [])
 

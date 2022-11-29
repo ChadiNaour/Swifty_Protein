@@ -22,17 +22,11 @@ const Home = ({ navigation }: Props) => {
         }
     }, [fontsLoaded]);
 
-    const handleOutsideClick = () => {
-        Keyboard.dismiss();
-        onChangeSearch('');
-    }
-
     useEffect(() => {
         if (Search.length > 0) {
             const timer = setTimeout(() => {
                 const newData = ligands.filter(value => value.toLowerCase().includes(Search.toLowerCase()))
                 setDisplayedData(newData);
-                // console.log("---------------------------", displayedData);
             }, 500)
             return () => clearTimeout(timer)
         }
@@ -44,14 +38,7 @@ const Home = ({ navigation }: Props) => {
         children?: React.ReactNode
     }
 
-    const HideKeyboard = ({ children }: wrapper) => (
-        <TouchableWithoutFeedback onPress={() => handleOutsideClick()}>
-            {children}
-        </TouchableWithoutFeedback>
-    );
-
     return (
-        // <HideKeyboard >
             <View style={styles.container} onLayout={onLayoutRootView} >
                 <StatusBar style="auto" />
                 <View style={styles.TopContainer}>
@@ -70,7 +57,6 @@ const Home = ({ navigation }: Props) => {
                 </View>
                 <Flatlist DATA={displayedData} />
             </View>
-        // </HideKeyboard>
     )
 }
 
@@ -105,7 +91,7 @@ const styles = StyleSheet.create({
         backgroundColor: "white",
         height: 150,
         width: "85%",
-        borderRadius: 20,
+        borderRadius: 10,
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
@@ -116,8 +102,8 @@ const styles = StyleSheet.create({
         },
         shadowOpacity: 0.25,
         shadowRadius: 3.84,
-        zIndex: 99,
         elevation: 5,
+        zIndex: 99,
     },
     input: {
         width: '85%',
