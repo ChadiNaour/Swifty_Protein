@@ -1,5 +1,5 @@
 import React, { useCallback } from 'react';
-import { Pressable, Image, Alert, StyleSheet, Text, View } from 'react-native';
+import { Pressable, Image, Alert, StyleSheet, Text, View, StatusBar } from 'react-native';
 import { useFonts } from 'expo-font';
 import * as SplashScreen from 'expo-splash-screen';
 import * as LocalAuthentication from 'expo-local-authentication';

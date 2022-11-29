@@ -5,6 +5,7 @@ import { useFonts } from 'expo-font';
 import * as SplashScreen from 'expo-splash-screen';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import type { RootStackParamList } from '../App';
+import Flatlist from '../components/Flatlist';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'Home'>;
 const Home = ({ navigation }: Props) => {
@@ -26,8 +27,9 @@ const Home = ({ navigation }: Props) => {
         <View style={styles.container} onLayout={onLayoutRootView}>
             <StatusBar style="auto" />
             <View style={styles.TopContainer}>
+                <View style={styles.roundedBackground}></View>
                 <View style={styles.SearchContainer}>
-                    <Text style={{ fontFamily: 'NexaBold', fontSize: 23, color: 'black' }}>Ligands</Text>
+                    <Text style={{ fontFamily: 'NexaBold', fontSize: 22, color: 'black' }}>Ligands</Text>
                     <TextInput
                         style={styles.input}
                         onChangeText={onChangeSearch}
@@ -36,6 +38,7 @@ const Home = ({ navigation }: Props) => {
                     />
                 </View>
             </View>
+                <Flatlist />
         </View>
     )
 }
@@ -45,23 +48,25 @@ export default Home;
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        flexDirection: "column",
-        backgroundColor: '#fff',
-        alignItems: 'center',
-        justifyContent: 'center',
+        backgroundColor: '#ffffff',
     },
     TopContainer: {
-        position: 'absolute',
-        top: 0,
-        backgroundColor: "#0F0E0E",
-        height: 150,
+        position: 'relative',
+        height: 170,
         width: "100%",
-        borderBottomEndRadius: 15,
-        borderBottomStartRadius: 15,
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
 
+    },
+    roundedBackground: {
+        position: 'absolute',
+        top: 0,
+        backgroundColor: "#0F0E0E",
+        height: 170,
+        width: "100%",
+        borderBottomEndRadius: 15,
+        borderBottomStartRadius: 15,
     },
     SearchContainer: {
         position: 'absolute',
@@ -80,11 +85,12 @@ const styles = StyleSheet.create({
         },
         shadowOpacity: 0.25,
         shadowRadius: 3.84,
+        zIndex: 10,
 
         elevation: 5,
     },
     input: {
-        width: '80%',
+        width: '85%',
         margin: 12,
         borderWidth: 1,
         borderRadius: 10,
