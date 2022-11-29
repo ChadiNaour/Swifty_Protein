@@ -3,7 +3,11 @@ import { SafeAreaView, View, FlatList, StyleSheet, Text } from 'react-native';
 import Feather from "react-native-vector-icons/Feather";
 import { useFonts } from 'expo-font';
 
-const FlatListComponent = ({DATA} : any) => {
+interface ligandsData {
+  DATA: string[];
+}
+
+const FlatListComponent = ({ DATA }: ligandsData) => {
   const [fontsLoaded] = useFonts({
     'NexaBold': require('../assets/fonts/Nexa/NexaTextDemo-Bold.ttf'),
   });
