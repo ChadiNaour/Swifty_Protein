@@ -1,19 +1,16 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { SafeAreaView, View, FlatList, StyleSheet, Text } from 'react-native';
 import Feather from "react-native-vector-icons/Feather";
-import ligands from "../assets/Ligands/Ligands.json";
 import { useFonts } from 'expo-font';
 
-const FlatListComponent = () => {
+const FlatListComponent = ({DATA} : any) => {
   const [fontsLoaded] = useFonts({
     'NexaBold': require('../assets/fonts/Nexa/NexaTextDemo-Bold.ttf'),
   });
 
   const onLayoutRootView = useCallback(async () => {
   }, [fontsLoaded]);
-  if (!fontsLoaded) {
-    return null;
-  }
+
 
   interface renderedItem {
     item: string;
@@ -21,7 +18,7 @@ const FlatListComponent = () => {
 
   const renderItem = ({ item }: renderedItem) => {
     return (
-      <View style={ligands.indexOf(item) === 0 ? styles.firstListItem : styles.listItem}>
+      <View style={DATA.indexOf(item) === 0 ? styles.firstListItem : styles.listItem}>
         <Text style={{
           fontFamily: 'NexaBold',
           fontSize: 16,
@@ -37,7 +34,7 @@ const FlatListComponent = () => {
   return (
     <SafeAreaView style={styles.container} onLayout={onLayoutRootView}>
       <FlatList
-        data={ligands}
+        data={DATA}
         renderItem={renderItem}
         keyExtractor={(item) => (item)}
         initialNumToRender={10}
@@ -53,6 +50,8 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     width: '100%',
+    zIndex: -1
+
   },
   firstListItem: {
     display: 'flex',
@@ -64,7 +63,7 @@ const styles = StyleSheet.create({
     paddingVertical: 12,
     marginVertical: 10,
     width: 350,
-    marginTop: 50
+    marginTop: 55
 
   },
   listItem: {

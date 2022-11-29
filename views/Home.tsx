@@ -1,15 +1,17 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View, TextInput } from 'react-native';
+import { StyleSheet, TouchableWithoutFeedback, Text, View, TextInput, Keyboard } from 'react-native';
 import { useFonts } from 'expo-font';
 import * as SplashScreen from 'expo-splash-screen';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import type { RootStackParamList } from '../App';
 import Flatlist from '../components/Flatlist';
+import ligands from "../assets/Ligands/Ligands.json";
 
 type Props = NativeStackScreenProps<RootStackParamList, 'Home'>;
 const Home = ({ navigation }: Props) => {
     const [Search, onChangeSearch] = useState("");
+    const [displayedData, setDisplayedData] = useState(ligands)
     const [fontsLoaded] = useFonts({
         'NexaBold': require('../assets/fonts/Nexa/NexaTextDemo-Bold.ttf'),
     });
@@ -19,27 +21,56 @@ const Home = ({ navigation }: Props) => {
             await SplashScreen.hideAsync();
         }
     }, [fontsLoaded]);
-    if (!fontsLoaded) {
-        return null;
+
+    const handleOutsideClick = () => {
+        Keyboard.dismiss();
+        onChangeSearch('');
     }
 
+    useEffect(() => {
+        if (Search.length > 0) {
+            const timer = setTimeout(() => {
+                const newData = ligands.filter(value => value.toLowerCase().includes(Search.toLowerCase()))
+                setDisplayedData(newData);
+                // console.log("---------------------------", displayedData);
+            }, 500)
+            return () => clearTimeout(timer)
+        }
+        else
+            setDisplayedData(ligands);
+    }, [Search])
+
+    interface wrapper {
+        children?: React.ReactNode
+    }
+
+    const HideKeyboard = ({ children }: wrapper) => (
+        <TouchableWithoutFeedback onPress={() => handleOutsideClick()}>
+            {children}
+        </TouchableWithoutFeedback>
+    );
+
     return (
-        <View style={styles.container} onLayout={onLayoutRootView}>
-            <StatusBar style="auto" />
-            <View style={styles.TopContainer}>
-                <View style={styles.roundedBackground}></View>
-                <View style={styles.SearchContainer}>
-                    <Text style={{ fontFamily: 'NexaBold', fontSize: 22, color: 'black' }}>Ligands</Text>
-                    <TextInput
-                        style={styles.input}
-                        onChangeText={onChangeSearch}
-                        value={Search}
-                        placeholder="Search"
-                    />
+        // <HideKeyboard >
+            <View style={styles.container} onLayout={onLayoutRootView} >
+                <StatusBar style="auto" />
+                <View style={styles.TopContainer}>
+                    <View style={styles.roundedBackground}></View>
+                    <View style={styles.SearchContainer}>
+                        <Text style={{ fontFamily: 'NexaBold', fontSize: 22, color: 'black' }}>Ligands</Text>
+                        <TextInput
+                            style={styles.input}
+                            onChangeText={onChangeSearch}
+
+                            clearTextOnFocus={true}
+                            value={Search}
+                            placeholder="Search"
+                        />
+                    </View>
                 </View>
+                <Flatlist DATA={displayedData} />
             </View>
-                <Flatlist />
-        </View>
+        // </HideKeyboard>
     )
 }
 
@@ -85,8 +116,7 @@ const styles = StyleSheet.create({
         },
         shadowOpacity: 0.25,
         shadowRadius: 3.84,
-        zIndex: 10,
-
+        zIndex: 99,
         elevation: 5,
     },
     input: {
