@@ -9,6 +9,13 @@ interface ligandsData {
   DATA: string[];
 }
 
+interface Atom {
+  name: string;
+  x: number;
+  y: number;
+  z: number;
+}
+
 const FlatListComponent = ({ DATA }: ligandsData) => {
   const [fontsLoaded] = useFonts({
     'NexaBold': require('../assets/fonts/Nexa/NexaTextDemo-Bold.ttf'),
@@ -25,7 +32,21 @@ const FlatListComponent = ({ DATA }: ligandsData) => {
         axios.get(`https://files.rcsb.org/ligands/view/${item}_ideal.pdb`)
           .then(res => {
             setLoading(false);
-            console.log(res);
+            var Atoms: Atom[] = [];
+            res.data.split("\n").forEach((element: string, index: number) => {
+              let elem = element.replace(/\s+/g, " ").split(" ");
+              console.log(index,elem);
+              // if (elem.includes("ATOM")) {
+              //   Atoms[index].x = Number(elem[6]);
+              //   Atoms[index].x = Number(elem[7]);
+              //   Atoms[index].x = Number(elem[8]);
+              //   Atoms[index].name = elem[11];
+              // }
+              // else if (elem.includes("CONECT")){
+
+              // }      
+            });
+            console.log(Atoms);
           })
       }
     })
@@ -72,22 +93,22 @@ const FlatListComponent = ({ DATA }: ligandsData) => {
 
   return (
     <>
-    {loading && <ActivityIndicator
-      size="large"
-      color="#fff"
-      animating={loading}
-      style={styles.indicatorStyle}
-    />}
-    <SafeAreaView style={styles.container} onLayout={onLayoutRootView}>
-      <FlatList
-        data={DATA}
-        renderItem={renderItem}
-        keyExtractor={(item) => (item)}
-        initialNumToRender={10}
-        showsVerticalScrollIndicator={false}
-        contentContainerStyle={{ flexGrow: 1 }}
-      />
-    </SafeAreaView>
+      {loading && <ActivityIndicator
+        size="large"
+        color="#fff"
+        animating={loading}
+        style={styles.indicatorStyle}
+      />}
+      <SafeAreaView style={styles.container} onLayout={onLayoutRootView}>
+        <FlatList
+          data={DATA}
+          renderItem={renderItem}
+          keyExtractor={(item) => (item)}
+          initialNumToRender={10}
+          showsVerticalScrollIndicator={false}
+          contentContainerStyle={{ flexGrow: 1 }}
+        />
+      </SafeAreaView>
     </>
   );
 }

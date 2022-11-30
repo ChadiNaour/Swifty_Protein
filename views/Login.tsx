@@ -59,7 +59,7 @@ const Login = ({ navigation }: Props) => {
                             style={styles.SymbolLogo}
                             source={require("../assets/images/Symbol_Logo.png")}
                         />
-                        <Text style={{ position: "absolute", bottom: -90, fontFamily: 'MondaBold', fontSize: 25, color: 'black' }}>42 Proteins</Text>
+                        <Text style={{ position: "absolute", bottom: -95, fontFamily: 'MondaBold', fontSize: 25, color: 'black' }}>42 Proteins</Text>
 
                     </View>
                 </ImageBackground>
