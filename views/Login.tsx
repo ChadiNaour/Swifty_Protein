@@ -1,12 +1,11 @@
 import React, { useCallback } from 'react';
 import { Pressable, Image, Alert, StyleSheet, Text, View, ImageBackground } from 'react-native';
+import { StatusBar } from 'expo-status-bar';
 import { useFonts } from 'expo-font';
 import * as SplashScreen from 'expo-splash-screen';
 import * as LocalAuthentication from 'expo-local-authentication';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import type { RootStackParamList } from '../App';
-import backgroundImage from "../assets/images/backgroundImage.png";
-import SymbolLogo from "../assets/images/Symbol_Logo.png";
 
 
 type Props = NativeStackScreenProps<RootStackParamList, 'Login'>;
@@ -44,23 +43,23 @@ const Login = ({ navigation }: Props) => {
         catch (error: any) {
             Alert.alert("an error has occured", error.message);
         }
-
     }
 
     return (
         <View style={styles.container} onLayout={onLayoutRootView}>
+            <StatusBar style="auto" />
             <View style={styles.TopContainer}>
                 <ImageBackground
-                    source={backgroundImage}
+                    source={require("../assets/images/backgroundImage.png")}
                     resizeMode="contain"
                     style={styles.image}
                 >
                     <View style={styles.LogoContainer}>
                         <Image
                             style={styles.SymbolLogo}
-                            source={SymbolLogo}
+                            source={require("../assets/images/Symbol_Logo.png")}
                         />
-                        <Text style={{ position: "absolute", bottom: -95, fontFamily: 'MondaBold', fontSize: 25, color: 'black' }}>42 Proteins</Text>
+                        <Text style={{ position: "absolute", bottom: -90, fontFamily: 'MondaBold', fontSize: 25, color: 'black' }}>42 Proteins</Text>
 
                     </View>
                 </ImageBackground>
@@ -161,8 +160,8 @@ const styles = StyleSheet.create({
     },
     LoginButton: {
         backgroundColor: '#0F0E0E',
-        width: 220,
-        height: 55,
+        width: 200,
+        height: 50,
         borderRadius: 10,
         display: 'flex',
         alignItems: 'center',
@@ -171,8 +170,8 @@ const styles = StyleSheet.create({
     image: {
         justifyContent: "center",
         width: "100%",
-        height: 350,
+        height: 400,
         position: "absolute",
-        top: 110
+        top: 85
     },
 });

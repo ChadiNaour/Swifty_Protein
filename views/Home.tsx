@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, TouchableWithoutFeedback, Text, View, TextInput, Keyboard } from 'react-native';
+import { StyleSheet, Text, View, TextInput } from 'react-native';
 import { useFonts } from 'expo-font';
 import * as SplashScreen from 'expo-splash-screen';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
@@ -34,10 +34,6 @@ const Home = ({ navigation }: Props) => {
             setDisplayedData(ligands);
     }, [Search])
 
-    interface wrapper {
-        children?: React.ReactNode
-    }
-
     return (
             <View style={styles.container} onLayout={onLayoutRootView} >
                 <StatusBar style="auto" />
@@ -69,7 +65,7 @@ const styles = StyleSheet.create({
     },
     TopContainer: {
         position: 'relative',
-        height: 170,
+        height: 200,
         width: "100%",
         display: 'flex',
         alignItems: 'center',
@@ -80,14 +76,14 @@ const styles = StyleSheet.create({
         position: 'absolute',
         top: 0,
         backgroundColor: "#0F0E0E",
-        height: 170,
+        height: 200,
         width: "100%",
         borderBottomEndRadius: 15,
         borderBottomStartRadius: 15,
     },
     SearchContainer: {
         position: 'absolute',
-        top: 50,
+        top: 95,
         backgroundColor: "white",
         height: 150,
         width: "85%",

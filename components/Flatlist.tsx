@@ -1,7 +1,9 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { SafeAreaView, View, FlatList, StyleSheet, Text } from 'react-native';
+import { SafeAreaView, FlatList, StyleSheet, Text, Pressable, Alert, ActivityIndicator } from 'react-native';
+import axios from 'axios';
 import Feather from "react-native-vector-icons/Feather";
 import { useFonts } from 'expo-font';
+import * as Network from 'expo-network';
 
 interface ligandsData {
   DATA: string[];
@@ -11,6 +13,39 @@ const FlatListComponent = ({ DATA }: ligandsData) => {
   const [fontsLoaded] = useFonts({
     'NexaBold': require('../assets/fonts/Nexa/NexaTextDemo-Bold.ttf'),
   });
+  const [loading, setLoading] = useState(false)
+
+  //Getting the clicked ligand Data
+  const getLigandData = async (item: string) => {
+    console.log("the clicked item", item);
+    //checking connection before getting the data
+    await Network.getNetworkStateAsync().then(res => {
+      setLoading(true);
+      if (res.isConnected) {
+        axios.get(`https://files.rcsb.org/ligands/view/${item}_ideal.pdb`)
+          .then(res => {
+            setLoading(false);
+            console.log(res);
+          })
+      }
+    })
+  }
+
+  //Ckecking the connection
+  useEffect(() => {
+    const checkNetwork = async () => {
+      await Network.getNetworkStateAsync().then(res => {
+        if (res.isConnected === false) {
+          Alert.alert(
+            'No Internet Connection',
+            'Please check your internet connection',
+            [{ text: 'OK' }],
+          );
+        }
+      });
+    }
+    checkNetwork();
+  }, []);
 
   const onLayoutRootView = useCallback(async () => {
   }, [fontsLoaded]);
@@ -22,7 +57,7 @@ const FlatListComponent = ({ DATA }: ligandsData) => {
 
   const renderItem = ({ item }: renderedItem) => {
     return (
-      <View style={DATA.indexOf(item) === 0 ? styles.firstListItem : styles.listItem}>
+      <Pressable style={DATA.indexOf(item) === 0 ? styles.firstListItem : styles.listItem} onPress={() => { getLigandData(item) }}>
         <Text style={{
           fontFamily: 'NexaBold',
           fontSize: 16,
@@ -30,12 +65,19 @@ const FlatListComponent = ({ DATA }: ligandsData) => {
           marginLeft: 20
         }}>{item}</Text>
         <Feather style={styles.chevronIcon} name="chevron-right" size={28} color="#5E5E5F" />
-      </View>
+      </Pressable>
     )
   };
 
 
   return (
+    <>
+    {loading && <ActivityIndicator
+      size="large"
+      color="#fff"
+      animating={loading}
+      style={styles.indicatorStyle}
+    />}
     <SafeAreaView style={styles.container} onLayout={onLayoutRootView}>
       <FlatList
         data={DATA}
@@ -46,10 +88,20 @@ const FlatListComponent = ({ DATA }: ligandsData) => {
         contentContainerStyle={{ flexGrow: 1 }}
       />
     </SafeAreaView>
+    </>
   );
 }
 
 const styles = StyleSheet.create({
+  indicatorStyle: {
+    position: 'absolute',
+    backgroundColor: 'rgba(52, 52, 52, 0.8)',
+    width: '100%',
+    height: '100%',
+    justifyContent: 'center',
+    alignItems: 'center',
+    zIndex: 1,
+  },
   container: {
     flex: 1,
     justifyContent: 'center',
@@ -57,8 +109,6 @@ const styles = StyleSheet.create({
     width: '100%',
     height: '100%',
     zIndex: -1,
-    // marginBottom: 20
-
   },
   firstListItem: {
     display: 'flex',
@@ -70,7 +120,7 @@ const styles = StyleSheet.create({
     paddingVertical: 12,
     marginVertical: 10,
     width: 350,
-    marginTop: 50
+    marginTop: 70
 
   },
   listItem: {

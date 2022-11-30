@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 //navigation
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
@@ -8,10 +8,8 @@ import Login from './views/Login';
 import Home from './views/Home';
 import Preview from './views/Preview';
 import * as SplashScreen from 'expo-splash-screen';
-import { useFonts } from 'expo-font';
 
 export type RootStackParamList = {
-  Splash: any;
   Login: any;
   Home: any;
   Preview: any;
@@ -39,7 +37,7 @@ export default function App() {
     <NavigationContainer>
       <Stack.Navigator initialRouteName="Login">
         <Stack.Screen name="Login" component={Login} options={{ headerShown: false }} />
-        <Stack.Screen name="Home" component={Home} />
+        <Stack.Screen name="Home" component={Home} options={{ headerShown: false }} />
         <Stack.Screen name="Preview" component={Preview} />
       </Stack.Navigator>
     </NavigationContainer>
