@@ -9,6 +9,7 @@ import Flatlist from '../components/Flatlist';
 import ligands from "../assets/Ligands/Ligands.json";
 
 type Props = NativeStackScreenProps<RootStackParamList, 'Home'>;
+
 const Home = ({ navigation }: Props) => {
     const [Search, onChangeSearch] = useState("");
     const [displayedData, setDisplayedData] = useState(ligands)

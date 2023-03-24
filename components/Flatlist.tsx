@@ -31,23 +31,36 @@ const FlatListComponent = ({ DATA }: ligandsData) => {
       if (res.isConnected) {
         axios.get(`https://files.rcsb.org/ligands/view/${item}_ideal.pdb`)
           .then(res => {
-            setLoading(false);
-            var Atoms: Atom[] = [];
-            res.data.split("\n").forEach((element: string, index: number) => {
-              let elem = element.replace(/\s+/g, " ").split(" ");
-              console.log(index,elem);
-              // if (elem.includes("ATOM")) {
-              //   Atoms[index].x = Number(elem[6]);
-              //   Atoms[index].x = Number(elem[7]);
-              //   Atoms[index].x = Number(elem[8]);
-              //   Atoms[index].name = elem[11];
-              // }
-              // else if (elem.includes("CONECT")){
+            if (res.data) {
+              console.log("data is ==>", res.data);
+              var Atoms: Atom[] = [];
+              // res.data.split("\n").forEach((element: string, index: number) => {
+              //   let elem = element.replace(/\s+/g, " ").split(" ");
+              //   //console.log(index, elem);
+              //   // if (elem.includes("ATOM")) {
+              //   //   Atoms[index].x = Number(elem[6]);
+              //   //   Atoms[index].x = Number(elem[7]);
+              //   //   Atoms[index].x = Number(elem[8]);
+              //   //   Atoms[index].name = elem[11];
+              //   // }
+              //   // else if (elem.includes("CONECT")){
 
-              // }      
-            });
-            console.log(Atoms);
+              //   // }      
+              // })
+            }
           })
+          .catch((er: any) => Alert.alert(er));
+        setLoading(false);
+        // console.log("Atoms =>",Atoms);
+      }
+      else {
+        setLoading(false);
+        Alert.alert(
+          'No Internet Connection',
+          'Please check your internet connection',
+          [{ text: 'OK' }],
+        );
+
       }
     })
   }
