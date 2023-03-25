@@ -4,6 +4,8 @@ import axios from 'axios';
 import Feather from "react-native-vector-icons/Feather";
 import { useFonts } from 'expo-font';
 import * as Network from 'expo-network';
+import { atomsParse } from '../helpers/atomsParse';
+import { connectParse } from '../helpers/connectParse';
 
 interface ligandsData {
   DATA: string[];
@@ -32,26 +34,12 @@ const FlatListComponent = ({ DATA }: ligandsData) => {
         axios.get(`https://files.rcsb.org/ligands/view/${item}_ideal.pdb`)
           .then(res => {
             if (res.data) {
-              console.log("data is ==>", res.data);
-              var Atoms: Atom[] = [];
-              // res.data.split("\n").forEach((element: string, index: number) => {
-              //   let elem = element.replace(/\s+/g, " ").split(" ");
-              //   //console.log(index, elem);
-              //   // if (elem.includes("ATOM")) {
-              //   //   Atoms[index].x = Number(elem[6]);
-              //   //   Atoms[index].x = Number(elem[7]);
-              //   //   Atoms[index].x = Number(elem[8]);
-              //   //   Atoms[index].name = elem[11];
-              //   // }
-              //   // else if (elem.includes("CONECT")){
-
-              //   // }      
-              // })
+              const data = { atoms: atomsParse(res.data), connects: connectParse(res.data) };
+              console.log("proteins data ==>", data);
+              setLoading(false);
             }
           })
           .catch((er: any) => Alert.alert(er));
-        setLoading(false);
-        // console.log("Atoms =>",Atoms);
       }
       else {
         setLoading(false);
